@@ -1,4 +1,4 @@
-package edu.bsu.cs222.wikipedia.XML;
+package edu.bsu.cs222.Exceutor;
 
 import javax.swing.*;
 
@@ -16,6 +16,7 @@ public class UserInterface {
     private JButton OK;
     private JTextField UserInput;
     private JButton Cancel;
+    private JTextField UserEmail;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

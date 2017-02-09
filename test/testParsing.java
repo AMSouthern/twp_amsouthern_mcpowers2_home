@@ -50,4 +50,14 @@ public class testParsing {
         Assert.assertEquals("Gambardella, Matthew", author.getTextContent());
 
     }
+
+    /*
+    @Test
+    public void testInternetConnection(){
+
+        Boolean connected = checkForInternetConnection();
+        Assert.assertEquals(true, connected);
+    }
+    */
 }
+

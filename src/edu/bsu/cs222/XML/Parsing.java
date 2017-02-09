@@ -1,4 +1,4 @@
-package edu.bsu.cs222.wikipedia.XML;
+package edu.bsu.cs222.XML;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -9,7 +9,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URLConnection;
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -22,11 +22,10 @@ import java.io.InputStream;
 
 public class Parsing {
 
-    private Document makeXMLFile(String entry) throws ParserConfigurationException, IOException, SAXException {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(entry);
+    private Document makeXMLFile(URLConnection entry) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory buildDocument = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = buildDocument.newDocumentBuilder();
-        Document XMLDocument = builder.parse(inputStream);
+        Document XMLDocument = builder.parse(entry.getInputStream());
         return XMLDocument;
     }
 
