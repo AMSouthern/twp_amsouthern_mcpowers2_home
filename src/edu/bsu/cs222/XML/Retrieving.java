@@ -1,12 +1,11 @@
 package edu.bsu.cs222.XML;
 
-import javax.swing.text.Document;
 
+import javax.swing.text.Document;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import edu.bsu.cs222.XML.Parsing;
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -42,7 +41,7 @@ public class Retrieving {
      }
 
 
-    private static URLConnection connectToWikipedia(String userEmailAddress, String query) throws IOException {
+    public static URLConnection connectToWikipedia(String userEmailAddress, String query) throws IOException {
         query = query.replaceAll(" ", "+");
         URL url = new URL("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&format=xml&rvprop=timestamp%7Cuser&rvlimit=30&titles=" + query + "&redirects=");
         URLConnection connection = url.openConnection();

@@ -22,14 +22,14 @@ import java.net.URLConnection;
 
 public class Parsing {
 
-    private Document makeXMLFile(URLConnection entry) throws ParserConfigurationException, IOException, SAXException {
+    public Document makeXMLFile(URLConnection entry) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory buildDocument = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = buildDocument.newDocumentBuilder();
         Document XMLDocument = builder.parse(entry.getInputStream());
         return XMLDocument;
     }
 
-    private static Element getAuthorFromFile(Document XMLFile){
+    public static Element getAuthorFromFile(Document XMLFile){
         NodeList books = XMLFile.getElementsByTagName("book");
         Element firstBook = (Element)books.item(0);
         NodeList authors = firstBook.getElementsByTagName("author");
@@ -38,7 +38,7 @@ public class Parsing {
     }
 
 
-    private static String getFirst30AuthorFromFile(Document XMLFile){
+    public static String getFirst30AuthorFromFile(Document XMLFile){
         NodeList books = XMLFile.getElementsByTagName("book");
         Element firstBook = (Element)books.item(0);
 
