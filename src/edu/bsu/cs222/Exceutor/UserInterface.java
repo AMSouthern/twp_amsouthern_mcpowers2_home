@@ -59,17 +59,17 @@ public class UserInterface extends Application {
         OKButton.setOnAction(event -> {
             try {
                 getQueryInformation();
-            } catch (IOException | SAXException | ParserConfigurationException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    private void getQueryInformation() throws ParserConfigurationException, SAXException, IOException {
+    private void getQueryInformation() throws Exception {
         disableUI();
         Wikipedia wikiPage = new Wikipedia();
-        //String informationToPrint = parse.createDocument(inputField.getText());
-        //outputField.setText(informationToPrint);
+        String informationToPrint = wikiPage.queryInformation(inputField.getText());
+        outputField.setText(informationToPrint);
         enableUI();
     }
 

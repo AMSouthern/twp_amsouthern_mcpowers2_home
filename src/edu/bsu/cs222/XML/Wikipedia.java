@@ -1,17 +1,13 @@
 package edu.bsu.cs222.XML;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import edu.bsu.cs222.XML.UseXML;
+
 
 import static edu.bsu.cs222.XML.UseXML.makeRevisionsList;
 

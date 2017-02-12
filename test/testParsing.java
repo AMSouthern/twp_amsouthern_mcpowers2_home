@@ -1,3 +1,5 @@
+import edu.bsu.cs222.XML.UseXML;
+import edu.bsu.cs222.XML.Wikipedia;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,8 @@ public class testParsing {
 
     private Document document;
     private InputStream inputStream;
+    private UseXML parser;
+    private Wikipedia wikiPage;
 
     @Before
     public void setUp() throws ParserConfigurationException, IOException, SAXException {
