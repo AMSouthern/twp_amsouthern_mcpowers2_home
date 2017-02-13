@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.util.*;
 
 
-import static edu.bsu.cs222.Wikipedia.EditData.XMLDocument;
 import static edu.bsu.cs222.Wikipedia.EditData.grabAttributeOfRevision;
 import static edu.bsu.cs222.Wikipedia.EditData.grabEditValueFromEdits;
 
@@ -21,7 +20,7 @@ import static edu.bsu.cs222.Wikipedia.EditData.grabEditValueFromEdits;
  *
  * This class gets the frequency of edits for a Wikipedia page.
  */
-public class EditFrequency {
+public class EditFrequency extends Wikipedia{
 
 
     protected static int findFrequencyOfUserEdits(int revisionNumber) throws ParseException {
@@ -52,7 +51,7 @@ public class EditFrequency {
     }
 
     private static NodeList readRevisions() {
-        NodeList revisions = XMLDocument.getElementsByTagName("revisions");
+        NodeList revisions = connected.getElementsByTagName("revisions");
         Element firstRevision = (Element) revisions.item(0);
         return grabEditValueFromEdits(revisions, firstRevision);
     }

@@ -8,12 +8,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
+import static edu.bsu.cs222.Wikipedia.Checks.checkForRedirect;
 import static edu.bsu.cs222.Wikipedia.Checks.checkIfPageExists;
+import static edu.bsu.cs222.Wikipedia.EditData.getRevisionsList;
 
 
 /**
@@ -30,28 +31,32 @@ public class Wikipedia {
     private static URL url;
     private boolean connectionAvailable;
     private URLConnection connection;
+    static Document connected;
 
     public String queryInformation(String userEmailAddress, String searchTopic) throws Exception {
-        Document connected = makeXMLFile(userEmailAddress, searchTopic);
+        connected = makeXMLFile(userEmailAddress, searchTopic);
         checkForInternetConnection(userEmailAddress);
         if (connectionAvailable){
-            if(!checkIfPageExists(connected )){
+            if(!checkIfPageExists(connected)){
                 return "There is not a Wikipedia page for the query you entered.";
             }
             else{
-                return "";
-            }
+                //This is where we actually search for the information
+                //Add Labels for connection, timestamp and then query information
 
+                String print  = checkForRedirect(connected);
+                print = print + getRevisionsList();
+
+                return (print);
+
+                //return "";
+            }
         }
         else{
             return "Check your connection.";
         }
 
     }
-
-
-
-
 
     //Initial check for connection to Wikipedia.
     private boolean checkForInternetConnection(String userEmailAddress) throws Exception {
@@ -81,6 +86,7 @@ public class Wikipedia {
     private static Document readXMLFile(URLConnection connection) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        //System.out.print(documentBuilder.parse(connection.getInputStream()));
         return documentBuilder.parse(connection.getInputStream());
     }
 
@@ -96,7 +102,7 @@ public class Wikipedia {
 
     private static URL createHistoryOfQueryURL(String query) throws MalformedURLException {
         query = query.replace(" ", "+");
-        url = new URL("https://en.wikipedia.org/w/index.php?title=" + query + "&action=history");
+        url = new URL("https://en.wikipedia.org/w/api.php?action=query&prop=revisions&format=xml&rvprop=timestamp%7Cuser&rvlimit=30&titles=" + query +"&redirects=");
         return url;
     }
 }

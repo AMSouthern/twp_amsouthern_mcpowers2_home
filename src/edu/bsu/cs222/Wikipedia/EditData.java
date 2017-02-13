@@ -1,6 +1,5 @@
 package edu.bsu.cs222.Wikipedia;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -18,15 +17,14 @@ import static edu.bsu.cs222.Wikipedia.TimeStamp.convertTimeStamp;
  * CS 222 - S2 David Largent
  * February 14, 2017
  *
- * This class edits the data from the XML file.
+ * This class edits the data from the Wikipedia file.
  */
 
-public class EditData {
+public class EditData extends Wikipedia{
     
     private String userName;
     private String timeStamp;
     private int frequency;
-    public static Document XMLDocument;
 
     public EditData(int revisionNumber) throws ParseException {
         if (revisionNumber < findMaximumNumberOfEditsToPrint()) {
@@ -53,11 +51,6 @@ public class EditData {
     private int getFrequency() {
         return this.frequency;
     }
-
-    static void setDocument(Document XmlDocument) {
-        XMLDocument = XmlDocument;
-    }
-
 
 
     /////////////////////////////////////////////////////
@@ -94,7 +87,7 @@ public class EditData {
     }
 
     protected static NodeList getRevisionsList() {
-        NodeList edits = XMLDocument.getElementsByTagName("revisions");
+        NodeList edits = connected.getElementsByTagName("revisions");
         Element firstEdit = (Element) edits.item(0);
         return firstEdit.getElementsByTagName("rev");
     }
@@ -106,7 +99,7 @@ public class EditData {
     }
 
     private static NodeList readEdits() {
-        NodeList edits = XMLDocument.getElementsByTagName("revisions");
+        NodeList edits = connected.getElementsByTagName("revisions");
         Element firstEdit = (Element) edits.item(0);
         return grabEditValueFromEdits(edits, firstEdit);
     }

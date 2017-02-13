@@ -10,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import static javafx.application.Platform.exit;
+
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -18,8 +20,6 @@ import javafx.stage.Stage;
  * February 14, 2017
  *
  * This class deals with all of the information that goes to and from the User.
- *
- * Thank you lmkelley and xwang! Looking at your UI was extremely helpful.
  */
 public class UserInterface extends Application {
 
@@ -30,6 +30,7 @@ public class UserInterface extends Application {
 
 
     private Button OKButton = new Button("OK");
+    private Button CancelButton = new Button("Cancel");
     private TextField emailField = new TextField();
     private TextField queryField = new TextField();
     private Label outputField = new Label();
@@ -38,6 +39,7 @@ public class UserInterface extends Application {
     public void start(Stage UserField) throws Exception {
         configure(UserField);
         configureOKButton();
+        configureCancelButton();
     }
 
     private void configure(Stage UserField) {
@@ -45,6 +47,7 @@ public class UserInterface extends Application {
         UserField.setScene(new Scene(createRoot()));
         UserField.sizeToScene();
         emailField.setMinWidth(500);
+        queryField.setMinWidth(500);
         outputField.setMinSize(500,600);
         UserField.show();
 
@@ -62,6 +65,17 @@ public class UserInterface extends Application {
         });
     }
 
+
+    private void configureCancelButton() {
+        CancelButton.setOnAction(event -> {
+            try {
+                exit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     private void getQueryInformation() throws Exception {
         disableUI();
         Wikipedia wikiPage = new Wikipedia();
@@ -72,7 +86,7 @@ public class UserInterface extends Application {
 
     private Parent createRoot() {
         VBox root = new VBox();
-        root.getChildren().addAll(new Label("Search Term: "), queryField, OKButton, new Label("Output: "), outputField);
+        root.getChildren().addAll(new Label("Email Address: "), emailField, new Label("Search Term: "), queryField, OKButton, CancelButton, new Label("Information: "), outputField);
         return root;
     }
 
@@ -81,11 +95,13 @@ public class UserInterface extends Application {
         queryField.setEditable(true);
         emailField.setEditable(true);
         OKButton.setDisable(false);
+        CancelButton.setDisable(false);
     }
 
     private void disableUI() {
         queryField.setEditable(false);
         emailField.setEditable(false);
         OKButton.setDisable(true);
+        CancelButton.setDisable(true);
     }
 }
