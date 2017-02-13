@@ -46,6 +46,7 @@ public class UserInterface extends Application {
         UserField.setTitle("Wikipedia Research");
         UserField.setScene(new Scene(createRoot()));
         UserField.sizeToScene();
+        //
         emailField.setMinWidth(500);
         queryField.setMinWidth(500);
         outputField.setMinSize(500,600);

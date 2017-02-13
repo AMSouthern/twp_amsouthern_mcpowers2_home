@@ -46,6 +46,7 @@ public class Wikipedia {
 
                 String print  = checkForRedirect(connected);
                 print = print + getRevisionsList();
+                print = print + "";
 
                 return (print);
 
@@ -93,7 +94,6 @@ public class Wikipedia {
 
     private void makeWikiConnection(String userEmail) throws IOException {
         URL newURL = (url);
-
         connection = newURL.openConnection();
         connection.setRequestProperty("User-Agent", "Revision Tracker/0.1 (" + userEmail + ")");
         connection.connect();
