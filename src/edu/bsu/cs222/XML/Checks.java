@@ -29,7 +29,7 @@ public class Checks {
         try {
             NodeList redirects = document.getElementsByTagName("r");
             Element redirect = (Element)redirects.item(0);
-            return "Redirected from '" + redirect.getAttribute("from") + "' to '"
+            return "Your search has been redirected from '" + redirect.getAttribute("from") + "' to '"
                     + redirect.getAttribute("to") + "'.\n\n";
         }
         catch(NullPointerException e){

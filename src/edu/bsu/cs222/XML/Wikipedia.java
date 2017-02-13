@@ -59,6 +59,7 @@ public class Wikipedia {
     public InputStream returnInputStream() throws IOException {
         return connection.getInputStream();
     }
+
 /*
     public static Document makeXMLDocument(String userEmailAddress, String title) throws IOException, ParserConfigurationException, SAXException {
         URLConnection connection = connectToWikipedia(userEmailAddress);

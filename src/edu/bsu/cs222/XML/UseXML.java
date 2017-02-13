@@ -12,15 +12,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import static edu.bsu.cs222.XML.Checks.checkIfPageExists;
-
-
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -58,12 +54,15 @@ public class UseXML {
         return revisionsList;
     }
 
-    public static SimpleDateFormat convertTimeZone(String timeStamp) throws ParseException {
-        TimeZone local = TimeZone.getDefault();
-        SimpleDateFormat localTimeZone = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.0Z'");
-        localTimeZone.setTimeZone(local);
-        return localTimeZone;
+
+    private NodeList getRevisionsList() {
+        NodeList revisions = document.getElementsByTagName("revisions");
+        Element firstRevision = (Element) revisions.item(0);
+        return firstRevision.getElementsByTagName("rev");
     }
+
+
+
     /*
     public String prepareListForPrint(List<Revision> revisionsList, UseXML parseRevisions) {
         String preparedString = parseRevisions.checkForRedirect();
@@ -84,6 +83,60 @@ public class UseXML {
     public static void readXMLFile(){
 //TO DO
     }
+
+    public String sortUserList() {
+        //sort into list
+        sortListByFrequency();
+        //generate String from list
+        //return String to print
+        return "";
+    }
+
+    public void sortListByFrequency() {
+        NodeList users = getRevisionsList();
+        Element user;
+
+        int maxRevs = findMaximumRevs();
+        HashMap<String, Integer> userMap = new HashMap<>();
+        List<Map.Entry<String, Integer>> list = new ArrayList<>();
+
+        for( int index = 0; index < maxRevs; index++) {
+            user = (Element) users.item(index);
+            Revision newUser = new Revision(user.getAttribute("user"),user.getAttribute("timestamp"));
+            userMap.put(user.getAttribute("user"), countFrequency(maxRevs, newUser));
+            list.add(new AbstractMap.SimpleEntry<>(user.getAttribute("user"), countFrequency(maxRevs,newUser)));
+        }
+
+        list.sort(Revision::comparator);
+
+        for (int index = list.size() - 1; index >=0; index--) {
+            System.out.println(29 - index + ".) Username: " + list.get(index).getKey() + "\n");
+        }
+    }
+
+    private Integer countFrequency(int maxRevs, Revision newUser) {
+        int frequency = 0;
+        NodeList users = getRevisionsList();
+        Element user;
+
+        for (int index = 0; index < maxRevs; index++) {
+            user = (Element) users.item(index);
+            Revision compareUser = new Revision(user.getAttribute("user"),user.getAttribute("timestamp"));
+            if(compareUser.equals(newUser)) {
+                frequency++;
+            }
+        }
+        return frequency;
+    }
+
+    private int findMaximumRevs() {
+        NodeList users = getRevisionsList();
+        if(users.getLength() > 30) {
+            return 30;
+        }
+        return users.getLength();
+    }
+
 }
 
 
