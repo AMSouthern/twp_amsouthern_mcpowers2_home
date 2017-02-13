@@ -1,4 +1,3 @@
-import edu.bsu.cs222.Wikipedia.UseXML;
 import edu.bsu.cs222.Wikipedia.Wikipedia;
 import org.junit.Assert;
 import org.junit.Before;
