@@ -1,8 +1,3 @@
-import edu.bsu.cs222.XML.UseXML;
-import edu.bsu.cs222.XML.Wikipedia;
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
  * @ authors: Alexandria Southern and Marley Powers
  *
@@ -36,5 +31,18 @@ public class testChecks {
         parser.parse(wikiPage.returnInputStream());
         Assert.assertFalse(parser.checkIfPageExists());
     }
+
+     @Test
+    public void testPositiveThatPageExists() throws IOException, SAXException, ParserConfigurationException {
+        wikiPage.createFullURL("Soup");
+        testMethods();
+        Assert.assertTrue(parser.checkIfPageExists());
+    }
+
+    @Test
+    public void testNegativeThatPageExists() throws IOException, SAXException, ParserConfigurationException {
+        wikiPage.createFullURL("Bowling Pinheads");
+        testMethods();
+        Assert.assertFalse(parser.checkIfPageExists());
 */
 }

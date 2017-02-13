@@ -1,15 +1,22 @@
-package edu.bsu.cs222.XML;
+package edu.bsu.cs222.Wikipedia;
 
 
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 
-import static edu.bsu.cs222.XML.UseXML.makeRevisionsList;
+import static edu.bsu.cs222.Wikipedia.UseXML.makeRevisionsList;
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -17,7 +24,7 @@ import static edu.bsu.cs222.XML.UseXML.makeRevisionsList;
  * CS 222 - S2 David Largent
  * February 14, 2017
  *
- * This class retrieves and parses all the XML data into readable/ usable information.
+ * This class retrieves and parses all the Wikipedia data into readable/ usable information.
  */
 
 public class Wikipedia {
@@ -60,12 +67,30 @@ public class Wikipedia {
         return connection.getInputStream();
     }
 
-/*
+
     public static Document makeXMLDocument(String userEmailAddress, String title) throws IOException, ParserConfigurationException, SAXException {
-        URLConnection connection = connectToWikipedia(userEmailAddress);
+        return makeXMLFile(userEmailAddress, title);
+    }
+
+    private static Document makeXMLFile(String userEmailAddress, String title) throws IOException, ParserConfigurationException, SAXException {
+        URLConnection connection = connectToWikipedia(userEmailAddress, title);
         return readXMLFile(connection);
     }
-*/
+
+    private static URLConnection connectToWikipedia(String userEmailAddress, String title) throws IOException {
+        URL fullUrl = createHistoryOfQueryURL(title);
+        URLConnection connection = fullUrl.openConnection();
+        connection.setRequestProperty("User-Agent", "Revision Tracker/01 (" +userEmailAddress+ ")");
+        connection.connect();
+        return connection;
+    }
+
+    private static Document readXMLFile(URLConnection connection) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        return documentBuilder.parse(connection.getInputStream());
+    }
+
 
     private void makeWikiConnection(String userEmail) throws IOException {
         URL newURL = new URL(url);
@@ -76,9 +101,9 @@ public class Wikipedia {
     }
 
 
-    public String createHistoryOfQueryURL(String query){
+    public static URL createHistoryOfQueryURL(String query) throws MalformedURLException {
         query = query.replace(" ", "+");
-        String url = "https://en.wikipedia.org/w/index.php?title=" + query + "&action=history";
+        URL url = new URL ("https://en.wikipedia.org/w/index.php?title=" + query + "&action=history");
         return url;
     }
 }

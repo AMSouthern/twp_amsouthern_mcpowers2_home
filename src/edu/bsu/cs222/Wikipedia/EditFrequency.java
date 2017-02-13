@@ -1,8 +1,17 @@
 package edu.bsu.cs222.Wikipedia;
 
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
+
+
+import static edu.bsu.cs222.Wikipedia.EditData.XMLDocument;
+import static edu.bsu.cs222.Wikipedia.EditData.grabAttributeOfRevision;
+import static edu.bsu.cs222.Wikipedia.EditData.grabEditValueFromEdits;
+
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -23,7 +32,7 @@ public class EditFrequency {
 
     private static ArrayList<String> arrayOfRevisionUsers() throws ParseException {
         ArrayList<String> arrayOfUsers = new ArrayList<>();
-        int maximumNumberOfRevs = findMaximumNumberOfRevsToPrint();
+        int maximumNumberOfRevs = findMaximumNumberOfEditsToPrint();
         String username;
         for (int i = 0; i < maximumNumberOfRevs; i++) {
             username = grabAttributeOfRevision(i, "user");
@@ -32,5 +41,19 @@ public class EditFrequency {
         return arrayOfUsers;
     }
 
+    static int findMaximumNumberOfEditsToPrint() {
+        NodeList revs = readRevisions();
+        int maximumNumberOfRevs;
+        if (revs.getLength() >=30)
+            maximumNumberOfRevs = 30;
+        else
+            maximumNumberOfRevs = revs.getLength();
+        return maximumNumberOfRevs;
+    }
 
+    private static NodeList readRevisions() {
+        NodeList revisions = XMLDocument.getElementsByTagName("revisions");
+        Element firstRevision = (Element) revisions.item(0);
+        return grabEditValueFromEdits(revisions, firstRevision);
+    }
 }

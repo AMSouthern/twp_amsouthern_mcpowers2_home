@@ -1,4 +1,4 @@
-package edu.bsu.cs222.XML;
+package edu.bsu.cs222.Wikipedia;
 
 
 import org.w3c.dom.Document;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 
-import static edu.bsu.cs222.XML.Checks.checkIfPageExists;
+import static edu.bsu.cs222.Wikipedia.Checks.checkIfPageExists;
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -24,7 +24,7 @@ import static edu.bsu.cs222.XML.Checks.checkIfPageExists;
  * CS 222 - S2 David Largent
  * February 14, 2017
  *
- * This class uses the XML provided from Wikipedia.java.
+ * This class uses the Wikipedia provided from Wikipedia.java.
  */
 
 public class UseXML {
@@ -63,26 +63,11 @@ public class UseXML {
 
 
 
-    /*
-    public String prepareListForPrint(List<Revision> revisionsList, UseXML parseRevisions) {
-        String preparedString = parseRevisions.checkForRedirect();
-
-        for (Object edits : revisionsList) {
-            preparedString += edits.toString() + "\n";
-        }
-        return preparedString;
-    }
-
-    */
     public static void makeRevisionsList(List<Revision> revisionsList, UseXML parseRevisions, URLConnection connection) throws IOException, ParserConfigurationException, SAXException {
         revisionsList = parseRevisions.parse(connection.getInputStream());
     }
 
 
-
-    public static void readXMLFile(){
-//TO DO
-    }
 
     public String sortUserList() {
         //sort into list
@@ -114,6 +99,12 @@ public class UseXML {
         }
     }
 
+
+
+
+
+
+
     private Integer countFrequency(int maxRevs, Revision newUser) {
         int frequency = 0;
         NodeList users = getRevisionsList();
@@ -137,6 +128,17 @@ public class UseXML {
         return users.getLength();
     }
 
+    public String checkForRedirect(Document document) {
+        try {
+            NodeList redirects = document.getElementsByTagName("r");
+            Element redirect = (Element)redirects.item(0);
+            return "Your search has been redirected from '" + redirect.getAttribute("from") + "' to '"
+                    + redirect.getAttribute("to") + "'.\n\n";
+        }
+        catch(NullPointerException e){
+            return "";
+        }
+    }
 }
 
 

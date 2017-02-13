@@ -1,6 +1,6 @@
 package edu.bsu.cs222.Exceutor;
 
-import edu.bsu.cs222.XML.Wikipedia;
+import edu.bsu.cs222.Wikipedia.Wikipedia;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,10 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import jdk.internal.org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 
 
 /**

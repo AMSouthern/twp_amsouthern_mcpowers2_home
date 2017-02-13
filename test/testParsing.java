@@ -1,5 +1,5 @@
-import edu.bsu.cs222.XML.UseXML;
-import edu.bsu.cs222.XML.Wikipedia;
+import edu.bsu.cs222.Wikipedia.UseXML;
+import edu.bsu.cs222.Wikipedia.Wikipedia;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -62,6 +62,11 @@ public class testParsing {
         Element user = (Element)users.item(0);
         Assert.assertEquals("2016-12-23T16:25:19Z",user.getAttribute("timestamp"));
     }
-
+/*
+    private void testMethods() throws IOException, ParserConfigurationException, SAXException {
+        wikiPage.connect();
+        parser.parse(wikiPage.returnInputStream());
+    }
+*/
 }
 

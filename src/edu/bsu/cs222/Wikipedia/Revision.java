@@ -1,4 +1,4 @@
-package edu.bsu.cs222.XML;
+package edu.bsu.cs222.Wikipedia;
 
 import java.util.Map;
 
