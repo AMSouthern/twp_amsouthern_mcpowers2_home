@@ -27,14 +27,14 @@ import static edu.bsu.cs222.Wikipedia.Checks.checkIfPageExists;
 
 public class Wikipedia {
 
-    private String url;
+    private static URL url;
     private boolean connectionAvailable;
     private URLConnection connection;
 
     public String queryInformation(String userEmailAddress, String searchTopic) throws Exception {
         Document connected = makeXMLFile(userEmailAddress, searchTopic);
         checkForInternetConnection(userEmailAddress);
-        if (checkForInternetConnection(userEmailAddress)){
+        if (connectionAvailable){
             if(!checkIfPageExists(connected )){
                 return "There is not a Wikipedia page for the query you entered.";
             }
@@ -54,7 +54,7 @@ public class Wikipedia {
 
 
     //Initial check for connection to Wikipedia.
-    public boolean checkForInternetConnection(String userEmailAddress) throws Exception {
+    private boolean checkForInternetConnection(String userEmailAddress) throws Exception {
         try {
 
             makeWikiConnection(userEmailAddress);
@@ -63,15 +63,6 @@ public class Wikipedia {
             connectionAvailable = false;
         }
         return false;
-    }
-
-    public InputStream returnInputStream() throws IOException {
-        return connection.getInputStream();
-    }
-
-
-    public static Document makeXMLDocument(String userEmailAddress, String title) throws IOException, ParserConfigurationException, SAXException {
-        return makeXMLFile(userEmailAddress, title);
     }
 
     private static Document makeXMLFile(String userEmailAddress, String title) throws IOException, ParserConfigurationException, SAXException {
@@ -95,7 +86,7 @@ public class Wikipedia {
 
 
     private void makeWikiConnection(String userEmail) throws IOException {
-        URL newURL = new URL(url);
+        URL newURL = (url);
 
         connection = newURL.openConnection();
         connection.setRequestProperty("User-Agent", "Revision Tracker/0.1 (" + userEmail + ")");
@@ -103,9 +94,9 @@ public class Wikipedia {
     }
 
 
-    public static URL createHistoryOfQueryURL(String query) throws MalformedURLException {
+    private static URL createHistoryOfQueryURL(String query) throws MalformedURLException {
         query = query.replace(" ", "+");
-        URL url = new URL ("https://en.wikipedia.org/w/index.php?title=" + query + "&action=history");
+        url = new URL("https://en.wikipedia.org/w/index.php?title=" + query + "&action=history");
         return url;
     }
 }
