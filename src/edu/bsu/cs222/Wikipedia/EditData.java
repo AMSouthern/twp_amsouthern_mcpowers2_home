@@ -59,21 +59,6 @@ public class EditData {
     }
 
 
-    private Integer countFrequency(int maxRevs, Revision newUser) {
-        int frequency = 0;
-        NodeList users = getRevisionsList();
-        Element user;
-
-        for (int index = 0; index < maxRevs; index++) {
-            user = (Element) users.item(index);
-            Revision compareUser = new Revision(user.getAttribute("user"),user.getAttribute("timestamp"));
-            if(compareUser.equals(newUser)) {
-                frequency++;
-            }
-        }
-        return frequency;
-    }
-
 
     /////////////////////////////////////////////////////
     private static void QuickSort(ArrayList<EditData> arrayOfRevisions, int firstIndex, int lastIndex) {

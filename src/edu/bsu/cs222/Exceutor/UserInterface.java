@@ -30,7 +30,8 @@ public class UserInterface extends Application {
 
 
     private Button OKButton = new Button("OK");
-    private TextField inputField = new TextField();
+    private TextField emailField = new TextField();
+    private TextField queryField = new TextField();
     private Label outputField = new Label();
 
     @Override
@@ -43,7 +44,7 @@ public class UserInterface extends Application {
         UserField.setTitle("Wikipedia Research");
         UserField.setScene(new Scene(createRoot()));
         UserField.sizeToScene();
-        inputField.setMinWidth(500);
+        emailField.setMinWidth(500);
         outputField.setMinSize(500,600);
         UserField.show();
 
@@ -64,25 +65,27 @@ public class UserInterface extends Application {
     private void getQueryInformation() throws Exception {
         disableUI();
         Wikipedia wikiPage = new Wikipedia();
-        String informationToPrint = wikiPage.queryInformation(inputField.getText());
+        String informationToPrint = wikiPage.queryInformation(emailField.getText(), queryField.getText());
         outputField.setText(informationToPrint);
         enableUI();
     }
 
     private Parent createRoot() {
         VBox root = new VBox();
-        root.getChildren().addAll(new Label("Search Term: "), inputField, OKButton, new Label("Output: "), outputField);
+        root.getChildren().addAll(new Label("Search Term: "), queryField, OKButton, new Label("Output: "), outputField);
         return root;
     }
 
 
     private void enableUI() {
-        inputField.setEditable(true);
+        queryField.setEditable(true);
+        emailField.setEditable(true);
         OKButton.setDisable(false);
     }
 
     private void disableUI() {
-        inputField.setEditable(false);
+        queryField.setEditable(false);
+        emailField.setEditable(false);
         OKButton.setDisable(true);
     }
 }

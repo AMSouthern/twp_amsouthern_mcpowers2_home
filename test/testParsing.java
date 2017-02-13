@@ -19,14 +19,12 @@ import java.io.InputStream;
  * CS 222 - S2 David Largent
  * February 14, 2017
  *
- * This class tests all of the methods implemented in UseXML and Wikipedia.
+ * This class tests all of the methods implemented in Wikipedia.
  */
 public class testParsing {
 
     private Document document;
     private InputStream inputStream;
-    private UseXML parser;
-    private Wikipedia wikiPage;
 
     @Before
     public void setUp() throws ParserConfigurationException, IOException, SAXException {
@@ -61,11 +59,6 @@ public class testParsing {
         Element user = (Element)users.item(0);
         Assert.assertEquals("2016-12-23T16:25:19Z",user.getAttribute("timestamp"));
     }
-/*
-    private void testMethods() throws IOException, ParserConfigurationException, SAXException {
-        wikiPage.connect();
-        parser.parse(wikiPage.returnInputStream());
-    }
-*/
+
 }
 

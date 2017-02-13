@@ -12,11 +12,9 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+import static edu.bsu.cs222.Wikipedia.Checks.checkIfPageExists;
 
-import static edu.bsu.cs222.Wikipedia.UseXML.makeRevisionsList;
 
 /**
  * @ authors: Alexandria Southern and Marley Powers
@@ -32,30 +30,34 @@ public class Wikipedia {
     private String url;
     private boolean connectionAvailable;
     private URLConnection connection;
-    private List<Revision> revisionsList = new ArrayList<>();
-    private UseXML parseRevisions = new UseXML();
 
-    public String queryInformation(String searchTopic) throws Exception {
-        createHistoryOfQueryURL(searchTopic);
-        checkForInternetConnection();
-        if (connectionAvailable) {
-            makeRevisionsList(revisionsList, parseRevisions, connection);
-            if (revisionsList.equals(new ArrayList<>())) {
-                return "The is not a Wikipedia page for the name given";
-            } else {
-                return "";
-                //return prepareListForPrint(revisionsList);
+    public String queryInformation(String userEmailAddress, String searchTopic) throws Exception {
+        Document connected = makeXMLFile(userEmailAddress, searchTopic);
+        checkForInternetConnection(userEmailAddress);
+        if (checkForInternetConnection(userEmailAddress)){
+            if(!checkIfPageExists(connected )){
+                return "There is not a Wikipedia page for the query you entered.";
             }
-        } else {
-            return "There is not a connection to Wikipedia.";
+            else{
+                return "";
+            }
+
         }
+        else{
+            return "Check your connection.";
+        }
+
     }
 
+
+
+
+
     //Initial check for connection to Wikipedia.
-    public boolean checkForInternetConnection() throws Exception {
+    public boolean checkForInternetConnection(String userEmailAddress) throws Exception {
         try {
 
-            makeWikiConnection("");
+            makeWikiConnection(userEmailAddress);
             connectionAvailable = true;
         } catch (IOException e) {
             connectionAvailable = false;
